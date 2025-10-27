@@ -38,6 +38,14 @@ class BorrowersController < ApplicationController
     @borrower.destroy!
   end
 
+  # GET /borrowes/active
+  def active
+    on_loan = Loan.where(status: 1).pluck(:borrower_id)
+    @borrowers = Borrower.where.not(id: on_loan)
+
+    render json: @borrowers
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_borrower

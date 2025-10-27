@@ -38,6 +38,20 @@ class BooksController < ApplicationController
     @book.destroy!
   end
 
+  # GET /books/active
+  def active
+    on_loan_counts = Loan.where(status: 1)
+                         .group(:book_id)
+                         .count
+
+    @books = Book.all.select do |book|
+      loaned_count = on_loan_counts[book.id] || 0
+      loaned_count < book.stock
+    end
+
+    render json: @books
+  end
+
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_book

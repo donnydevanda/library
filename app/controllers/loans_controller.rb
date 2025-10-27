@@ -1,5 +1,5 @@
 class LoansController < ApplicationController
-  before_action :set_loan, only: %i[ show update destroy ]
+  before_action :set_loan, only: %i[ show update destroy return ]
 
   # GET /loans
   def index
@@ -26,7 +26,7 @@ class LoansController < ApplicationController
 
   # PATCH/PUT /loans/1
   def update
-    if @loan.update(status: 0, returned_at: Time.now)
+    if @loan.update(loan_params)
       render json: @loan
     else
       render json: @loan.errors, status: :unprocessable_content
@@ -38,18 +38,27 @@ class LoansController < ApplicationController
     @loan.destroy!
   end
 
-  # ONTIME /loans/ontime
+  # GET /loans/ontime
   def ontime
     @loans = Loan.where("return_deadline > returned_at")
 
     render json: @loans
   end
 
-  # LATE /loans/late
+  # GET /loans/late
   def late
     @loans = Loan.where("return_deadline <= returned_at")
 
     render json: @loans
+  end
+
+  # PUT /loans/1/return
+  def return
+    if @loan.update(status: 0, returned_at: Time.now)
+      render json: @loan
+    else
+      render json: @loan.errors, status: :unprocessable_content
+    end
   end
 
   private
