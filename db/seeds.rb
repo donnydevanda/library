@@ -10,7 +10,7 @@
 
 Book.create(title: "Flying Dutchman", isbn: "UTD-001-003", stock: 5)
 Book.create(title: "Ginger Hair", isbn: "UTD-006-008", stock: 3)
-Book.create(title: "The SAF", isbn: "UTD-011-014, stock: 5", stock: 0)
+Book.create(title: "The SAF", isbn: "UTD-011-014", stock: 0)
 Borrower.create(name: "Amad Light", email: "amad_light@utd.com")
 Borrower.create(name: "Bruno Midway", email: "brunmid@utd.com")
 Borrower.create(name: "Casemiro Brazillian", email: "cdsbr@utd.com")

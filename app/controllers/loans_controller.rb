@@ -3,7 +3,7 @@ class LoansController < ApplicationController
 
   # GET /loans
   def index
-    @loans = Loan.all
+    @loans = Loan.where(returned_at: nil)
 
     render json: @loans
   end

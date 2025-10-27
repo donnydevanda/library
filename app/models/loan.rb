@@ -4,6 +4,16 @@ class Loan < ApplicationRecord
   validate :validate_rules, on: :create
   before_validation :check_deadline, on: :create
 
+  def as_json(options = {})
+    super(options.merge(
+      include: {
+        book: { only: [:title] },
+        borrower: { only: [:name] }
+      },
+      except: [:book_id, :borrower_id, :created_at, :updated_at]
+    ))
+  end
+
   private
 
   def check_deadline

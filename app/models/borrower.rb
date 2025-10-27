@@ -1,5 +1,5 @@
 class Borrower < ApplicationRecord
-  has_many :loans
+  has_many :loans, dependent: :destroy
   validates :name, presence: true
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP }
   before_validation :assign_card_number, on: :create
